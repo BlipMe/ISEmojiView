@@ -41,9 +41,6 @@ public class ISEmojiView: UIView, UICollectionViewDataSource, UICollectionViewDe
     /// long press to pop preview effect like iOS10 system emoji keyboard, Default is true
     public var isShowPopPreview = true
     
-    private var defaultFrame: CGRect {
-        return CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 236)
-    }
     public var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = EmojiSize
@@ -90,14 +87,17 @@ public class ISEmojiView: UIView, UICollectionViewDataSource, UICollectionViewDe
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        
+        setupUI()
     }
     
     public override func layoutSubviews() {
+        super.layoutSubviews()
+        
         updateControlLayout()
     }
 
     private func setupUI() {
-        frame = defaultFrame
         
         // Default emojis
         if emojis == nil {
@@ -129,7 +129,8 @@ public class ISEmojiView: UIView, UICollectionViewDataSource, UICollectionViewDe
     }
     
     private func updateControlLayout() {
-        frame = defaultFrame
+        
+        collectionView.frame = self.bounds
         
         // update page control
         let pageCount = collectionView.numberOfSections
